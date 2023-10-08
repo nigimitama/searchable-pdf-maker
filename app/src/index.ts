@@ -32,7 +32,6 @@ const createWindow = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  ipcMain.handle("openFile", openFile)
   createWindow()
 });
 
@@ -55,38 +54,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-
-
-async function openFile() {
-  const win = BrowserWindow.getFocusedWindow();
-  const result = await dialog.showOpenDialog(
-    win,
-    // どんなダイアログを出すかを指定するプロパティ
-    {
-      properties: ["openFile"],
-      filters: [
-        {
-          name: "Documents",
-          // 読み込み可能な拡張子を指定
-          extensions: ["txt", "html", "md", "js", "ts"],
-        },
-      ],
-    }
-  );
-
-  // [ファイル選択]ダイアログが閉じられた後の処理
-  if (result.filePaths.length > 0) {
-    const filePath = result.filePaths[0];
-
-    // テキストファイルを読み込む
-    const textData = fs.readFileSync(filePath, "utf8");
-    // ファイルパスとテキストデータを返却
-    return {
-      filePath,
-      textData,
-    };
-  }
-  // ファイル選択ダイアログで何も選択しなかった場合は、nullを返しておく
-  return null;
-}
