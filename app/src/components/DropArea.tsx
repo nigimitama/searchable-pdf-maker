@@ -22,13 +22,13 @@ const readFile = async (event: DragEvent, setInputPaths: Function) => {
 
 export const DropArea = () => {
   const values = useContext(appContext)
-  const inputPathList = values.inputPaths.map((path: string) => <li>{path}</li>)
+  const inputPathList = values.inputPaths.map((path: string) => <li key={path}>{path}</li>)
   return (
     <div>
       <div
         style={{ border: 'dotted', padding: 15 }}
         onDragOver={fillDragOver}
-        onDrop={async (event) => { await readFile(event, values.setInputPaths) }}
+        onDrop={(event) => { readFile(event, values.setInputPaths) }}
       >
         <span>DropDown here</span>
       </div>
