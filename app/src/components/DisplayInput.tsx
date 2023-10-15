@@ -18,11 +18,10 @@ export const DisplayInput = () => {
       </ListItem>
     )
   })
-
   return (
     <div id='inputPathsDisplayArea' hidden>
       <p>{values.inputPaths.length} files are selected</p>
-      <List style={{overflowY: 'scroll', height: '200px'}}>
+      <List style={{overflowY: 'scroll', maxHeight: '200px'}}>
         {inputPathList}
       </List>
     </div>

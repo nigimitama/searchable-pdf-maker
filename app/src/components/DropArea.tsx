@@ -32,7 +32,7 @@ export const DropArea = () => {
       onDragOver={fillDragOver}
       onDrop={(event) => { readFile(event, values.setInputPaths) }}
     >
-      <span>DropDown here</span>
+      <span>Drop Files Here (.jpg/.png/.gif)</span>
     </div>
   )
 }
