@@ -18,24 +18,21 @@ const readFile = async (event: DragEvent, setInputPaths: Function) => {
     paths = paths.concat(filePaths)
   }
   setInputPaths(paths)
+
+  document.getElementById('dropArea').hidden = true
+  document.getElementById('inputPathsDisplayArea').hidden = false
 }
 
 export const DropArea = () => {
   const values = useContext(appContext)
-  const inputPathList = values.inputPaths.map((path: string) => <li key={path}>{path}</li>)
   return (
-    <div>
-      <div
-        style={{ border: 'dotted', padding: 15 }}
-        onDragOver={fillDragOver}
-        onDrop={(event) => { readFile(event, values.setInputPaths) }}
-      >
-        <span>DropDown here</span>
-      </div>
-
-      <div>
-        <span><ul>{inputPathList}</ul></span>
-      </div>
+    <div
+      id='dropArea'
+      style={{ border: 'dotted', padding: 15 }}
+      onDragOver={fillDragOver}
+      onDrop={(event) => { readFile(event, values.setInputPaths) }}
+    >
+      <span>DropDown here</span>
     </div>
   )
 }

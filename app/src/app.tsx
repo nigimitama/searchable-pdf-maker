@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { useState, createContext } from 'react';
 import { DropArea } from './components/DropArea'
+import { DisplayInput } from './components/DisplayInput'
 
 export const appContext = createContext({})
 
@@ -17,6 +18,7 @@ const App = () => {
       <div>
         <h2>Input</h2>
         <DropArea />
+        <DisplayInput />
         <footer className="footer"></footer>
       </div>
     </appContext.Provider>
