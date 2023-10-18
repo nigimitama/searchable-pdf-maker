@@ -52,6 +52,7 @@ const App = () => {
         </section>
 
         <section>
+          <Typography variant='h6'>Output Path</Typography>
           <OutputPathForm />
         </section>
 

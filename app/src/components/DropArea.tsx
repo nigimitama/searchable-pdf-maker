@@ -20,8 +20,9 @@ const readFile = async (event: DragEvent, setInputPaths: Function, setOutputPath
   document.getElementById('dropArea').hidden = true
   document.getElementById('inputPathsDisplayArea').hidden = false
 
-  const defaultPath = await window.myAPI.getDirPath(paths[0])
-  setOutputPath(defaultPath)
+  // set default save path
+  const inputDir = await window.myAPI.getDirPath(paths[0])
+  setOutputPath(`${inputDir}.pdf`)
 }
 
 
@@ -30,11 +31,14 @@ export const DropArea = () => {
   return (
     <div
       id='dropArea'
-      style={{ border: 'dotted', padding: 15 }}
+      style={{
+        border: 'dashed', borderWidth: '1px', borderColor: 'gray',
+        backgroundColor: 'whitesmoke', padding: 15
+      }}
       onDragOver={fillDragOver}
       onDrop={(event) => { readFile(event, context.setInputPaths, context.setOutputPath) }}
     >
-      <span>Drop Files Here (.jpg/.png/.gif)</span>
+      <p style={{ background: 'white', padding: 5, margin: 0 }}>Drop Files Here (.jpg/.png/.gif)</p>
     </div>
   )
 }

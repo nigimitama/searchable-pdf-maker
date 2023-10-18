@@ -9,16 +9,13 @@ export const OutputPathForm = () => {
 
   const fetchFilePath = async () => {
     const filePath = await window.myAPI.saveDialog(context.outputPath)
-    context.setOutputPath(filePath)
+    if (filePath) context.setOutputPath(filePath)
   }
 
   return (
     <div>
-      <Typography variant='h6'>Output Path</Typography>
-      <div>
-        <span style={{margin: '0 10px 0 0'}}>{context.outputPath}</span>
-        <Button variant='contained' size='small' onClick={fetchFilePath}>Browser</Button>
-      </div>
+      <span style={{margin: '0 10px 0 0'}}>{context.outputPath}</span>
+      <Button variant='contained' size='small' onClick={fetchFilePath}>Browser</Button>
     </div>
   )
 }

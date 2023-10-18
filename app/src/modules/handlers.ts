@@ -13,7 +13,11 @@ export const handleOpenDialog = async (_: IpcMainInvokeEvent, defaultPath: strin
     filters: [{ name: 'PDF file', extensions: ['pdf'] }]
   })
 
-  if (!canceled) return filePaths[0]
+  if (canceled) {
+    return null
+  } else {
+    return filePaths[0]
+  }
 }
 
 export const handleSaveDialog = async (_: IpcMainInvokeEvent, defaultPath: string) => {
@@ -22,7 +26,11 @@ export const handleSaveDialog = async (_: IpcMainInvokeEvent, defaultPath: strin
     filters: [{ name: 'PDF file', extensions: ['pdf'] }]
   })
 
-  if (!canceled) return filePath
+  if (canceled) {
+    return null
+  } else {
+    return filePath
+  }
 }
 
 export const handleGetDirPath = async (_: IpcMainInvokeEvent, filePath: string) => {
