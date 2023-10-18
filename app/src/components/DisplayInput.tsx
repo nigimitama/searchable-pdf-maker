@@ -7,8 +7,8 @@ import { appContext } from '../app'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 
 export const DisplayInput = () => {
-  const values = useContext(appContext)
-  const inputPathList = values.inputPaths.map((path: string) => {
+  const context = useContext(appContext)
+  const inputPathList = context.inputPaths.map((path: string) => {
     return (
       <ListItem disablePadding key={path}>
         <ListItemButton dense>
@@ -18,9 +18,11 @@ export const DisplayInput = () => {
       </ListItem>
     )
   })
+
   return (
     <div id='inputPathsDisplayArea' hidden>
-      <p>{values.inputPaths.length} files are selected</p>
+      <p>{context.inputPaths.length} files are selected</p>
+      {/* TODO: add clear button */}
       <List style={{overflowY: 'scroll', maxHeight: '200px'}}>
         {inputPathList}
       </List>

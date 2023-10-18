@@ -1,8 +1,19 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function LanguageSelection() {
+import { SyntheticEvent, useContext } from 'react';
+import { appContext } from '../app'
+
+
+export const LanguageSelection = () => {
+  const context = useContext(appContext)
   const englishIdx = 24
+
+  const setValues = (_: SyntheticEvent, values: Language[]) => {
+    const languageCodes: Array<string> = values.map((value: Language) => value.code)
+    context.setLanguageCodes(languageCodes)
+  }
+
   return (
     <Autocomplete
       multiple
@@ -11,11 +22,17 @@ export default function LanguageSelection() {
       getOptionLabel={(option) => option.name}
       defaultValue={[availableLanguages[englishIdx]]}
       renderInput={(params) => <TextField {...params} label="languages" />}
+      onChange={setValues}
     />
   );
 }
 
-const availableLanguages = [
+interface Language {
+  code: string,
+  name: string
+}
+
+const availableLanguages: Array<Language> = [
   { code: 'afr', name: 'Afrikaans' },
   { code: 'amh', name: 'Amharic' },
   { code: 'ara', name: 'Arabic' },

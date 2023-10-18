@@ -25,3 +25,8 @@ export const parseFilePaths = (inputPath: string): string[] => {
   console.log(`[parseFilePaths] result=${result}`)
   return result
 }
+
+
+export const getDirPath = (filePath: string): string => {
+  return path.dirname(filePath)
+}
