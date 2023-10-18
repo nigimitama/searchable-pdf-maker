@@ -10,7 +10,7 @@ export const LanguageSelection = () => {
   const englishIdx = 24
 
   const setValues = (_: SyntheticEvent, values: Language[]) => {
-    const languageCodes: Array<string> = values.map((value: Language) => value.code)
+    const languageCodes: string[] = values.map((value: Language) => value.code)
     context.setLanguageCodes(languageCodes)
   }
 
