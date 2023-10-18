@@ -9,12 +9,9 @@ const fillDragOver = (event: DragEvent) => {
 // ドロップされたらそのファイルのパスを読み込む
 const readFile = async (event: DragEvent, setInputPaths: Function, setOutputPath: Function) => {
   event.preventDefault()
-  console.log(`event.dataTransfer.files=${event.dataTransfer.files}`)
   let paths: Array<string> = []
   for (const file of event.dataTransfer.files) {
-    console.log(`file.path=${file.path}`)
     const filePaths = await window.myAPI.parseFilePaths(file.path)
-    console.log(`filePaths=${filePaths}`)
     paths = paths.concat(filePaths)
   }
   setInputPaths(paths)

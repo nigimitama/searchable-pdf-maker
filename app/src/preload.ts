@@ -5,5 +5,6 @@ import { contextBridge, ipcRenderer } from 'electron'
 contextBridge.exposeInMainWorld('myAPI', {
   parseFilePaths: (inputPath: string) => ipcRenderer.invoke('parseFilePaths', inputPath),
   openDialog: (defaultPath: string) => ipcRenderer.invoke('openDialog', defaultPath),
+  saveDialog: (defaultPath: string) => ipcRenderer.invoke('saveDialog', defaultPath),
   getDirPath: (filePath: string) => ipcRenderer.invoke('getDirPath', filePath),
 })

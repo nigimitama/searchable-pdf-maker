@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { appContext } from '../app'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 
+
 export const DisplayInput = () => {
   const context = useContext(appContext)
   const inputPathList = context.inputPaths.map((path: string) => {

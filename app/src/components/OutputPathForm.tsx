@@ -8,7 +8,7 @@ export const OutputPathForm = () => {
   const context = useContext(appContext)
 
   const fetchFilePath = async () => {
-    const filePath = await window.myAPI.openDialog(context.outputPath)
+    const filePath = await window.myAPI.saveDialog(context.outputPath)
     context.setOutputPath(filePath)
   }
 

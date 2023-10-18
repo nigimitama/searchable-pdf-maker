@@ -1,0 +1,31 @@
+// functions to be registered into ipcMain
+import { dialog, IpcMainInvokeEvent } from 'electron';
+import { parseFilePaths, getDirPath } from './filePath';
+
+export const handleParseFilePaths = async (_: IpcMainInvokeEvent, inputPath: string) => {
+  const filePaths = await parseFilePaths(inputPath)
+  return filePaths
+}
+
+export const handleOpenDialog = async (_: IpcMainInvokeEvent, defaultPath: string) => {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    defaultPath: defaultPath,
+    filters: [{ name: 'PDF file', extensions: ['pdf'] }]
+  })
+
+  if (!canceled) return filePaths[0]
+}
+
+export const handleSaveDialog = async (_: IpcMainInvokeEvent, defaultPath: string) => {
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    defaultPath: defaultPath,
+    filters: [{ name: 'PDF file', extensions: ['pdf'] }]
+  })
+
+  if (!canceled) return filePath
+}
+
+export const handleGetDirPath = async (_: IpcMainInvokeEvent, filePath: string) => {
+  const dirPath = await getDirPath(filePath)
+  return dirPath
+}
