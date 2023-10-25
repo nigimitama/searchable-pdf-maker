@@ -1,5 +1,5 @@
-import fs = require("fs")
-import path = require("path")
+import fs = require("node:fs")
+import path = require("node:path")
 
 
 const isDirectory = (inputPath: string): boolean => {

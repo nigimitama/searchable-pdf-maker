@@ -1,10 +1,8 @@
 import { createWorker, PSM } from 'tesseract.js';
 import { PDFDocument } from 'pdf-lib';
-import fs from 'fs';
-
-(async () => {
-  const worker = await createWorker('eng');
-})()
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
 // TODO: コントラストを強めるとかOCR向けの事前処理をはさみたいところ
 
@@ -24,15 +22,10 @@ const concatPdfs = async (pdfPaths: string[], outputPath: string) => {
 const imageToPdf = async (inputPath: string, outputPath: string, langCodes: string) => {
   console.log(`[imageToPdf] inputPath=${inputPath} outputPath=${outputPath} langCodes=${langCodes}`)
   const worker = await createWorker(langCodes);
-  console.log(`[imageToPdf] worker created`)
   await worker.setParameters({
     tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
-    user_defined_dpi: '300'
+    // user_defined_dpi: '300'
   });
-  console.log(`[imageToPdf] params sett`)
-  const { data: { text2 } } = await worker.recognize(inputPath)
-  console.log(`[imageToPdf] ${text2}`)
-
   const { data: { text, pdf } } = await worker.recognize(inputPath, { pdfTitle: outputPath }, { pdf: true });
   console.log(`[imageToPdf] ${text}`)
   fs.writeFileSync(outputPath, Buffer.from(pdf));
@@ -45,8 +38,9 @@ export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, l
 
   let tempPdfPath
   const tempPdfPaths: string[] = []
+  const tmpdir: string = os.tmpdir()
   for (const imagePath of imagePaths) {
-    tempPdfPath = `${imagePath}.pdf` // TODO: temp fileにする
+    tempPdfPath = path.join(tmpdir, `${path.basename(imagePath)}.pdf`)
     await imageToPdf(imagePath, tempPdfPath, langCodes)
     tempPdfPaths.push(tempPdfPath)
   }
