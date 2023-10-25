@@ -8,6 +8,6 @@ contextBridge.exposeInMainWorld('myAPI', {
   saveDialog: (defaultPath: string) => ipcRenderer.invoke('saveDialog', defaultPath),
   getDirPath: (filePath: string) => ipcRenderer.invoke('getDirPath', filePath),
   imagesToPdf: (inputPaths: string[], outputPdfPath: string, langCodes: string) => {
-    ipcRenderer.invoke('imagesToPdf', inputPaths, outputPdfPath, langCodes)
+    return ipcRenderer.invoke('imagesToPdf', inputPaths, outputPdfPath, langCodes)
   },
 })

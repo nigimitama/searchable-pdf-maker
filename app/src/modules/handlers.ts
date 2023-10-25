@@ -40,9 +40,6 @@ export const handleGetDirPath = async (_: IpcMainInvokeEvent, filePath: string) 
 }
 
 export const handleImagesToPdf = async (_: IpcMainInvokeEvent, imagePaths: string[], outputPdfPath: string, langCodes: string) => {
-  try {
-    await imagesToPdf(imagePaths, outputPdfPath, langCodes)
-  } catch (error) {
-    console.error(`[handleImagesToPdf] ERROR: ${error}`);
-  }
+  const result = await imagesToPdf(imagePaths, outputPdfPath, langCodes)
+  return result
 }

@@ -18,6 +18,7 @@ const concatPdfs = async (pdfPaths: string[], outputPath: string) => {
   fs.writeFileSync(outputPath, pdfBytes)
 }
 
+
 // 1枚の画像にOCRをかけてpdfにする
 const imageToPdf = async (inputPath: string, outputPath: string, langCodes: string) => {
   console.log(`[imageToPdf] inputPath=${inputPath} outputPath=${outputPath} langCodes=${langCodes}`)
@@ -30,6 +31,7 @@ const imageToPdf = async (inputPath: string, outputPath: string, langCodes: stri
   console.log(`[imageToPdf] ${text}`)
   fs.writeFileSync(outputPath, Buffer.from(pdf));
   await worker.terminate();
+  return true
 }
 
 // 複数の画像にOCRをかけてpdfにする
@@ -37,13 +39,18 @@ export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, l
   console.log(`[imagesToPdf] imagePaths=${imagePaths} outputPdfPath=${outputPdfPath} langCodes=${langCodes}`)
 
   let tempPdfPath
+  const results: boolean[] = []
   const tempPdfPaths: string[] = []
   const tmpdir: string = os.tmpdir()
   for (const imagePath of imagePaths) {
     tempPdfPath = path.join(tmpdir, `${path.basename(imagePath)}.pdf`)
-    await imageToPdf(imagePath, tempPdfPath, langCodes)
+    results.push(await imageToPdf(imagePath, tempPdfPath, langCodes))
     tempPdfPaths.push(tempPdfPath)
   }
   await concatPdfs(tempPdfPaths, outputPdfPath)
   console.log(`[imagesToPdf] ${outputPdfPath} created`)
+  
+  const isSuccess = results.every((value) => value == true)
+  console.log(`[imagesToPdf] isSuccess=${isSuccess}`)
+  return isSuccess
 }

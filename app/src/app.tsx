@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { useState, createContext } from 'react';
 import { DropArea } from './components/DropArea'
 import { DisplayInput } from './components/DisplayInput'
-import { LanguageSelection } from './components/LanguageSelection';
+import { LanguageSelection, getUsedLanguageCode } from './components/LanguageSelection';
 import { OutputPathForm } from './components/OutputPathForm';
 import { ExecuteButton } from './components/ExecuteButton';
 import Typography from '@mui/material/Typography';
@@ -22,8 +22,8 @@ export const appContext = createContext({})
 
 
 const App = () => {
-  const [inputPaths, setInputPaths] = useState([''])
-  const [languageCodes, setLanguageCodes] = useState(['eng'])
+  const [inputPaths, setInputPaths] = useState([])
+  const [languageCodes, setLanguageCodes] = useState([getUsedLanguageCode()])
   const [outputPath, setOutputPath] = useState('')
 
   const contextValues: contextValues = {

@@ -6,8 +6,8 @@ import { appContext } from '../app'
 
 
 // ブラウザの言語を取得する
-const getUsedLanguageCode = () => {
-  // Intl.NumberFormat().resolvedOptions().locale
+export const getUsedLanguageCode = (): string => {
+  // MEMO: Intl.NumberFormat().resolvedOptions().locale もアリ
   // ja-JP のような形で入ることも考えてsplitしておく
   const locale = window.navigator.language.split("-")[0]
   // ひとまずいくつかのメジャー言語だけ対応しておく
@@ -23,7 +23,7 @@ const getUsedLanguageCode = () => {
 
 export const LanguageSelection = () => {
   const context = useContext(appContext)
-  const defaultValue = availableLanguages.find((e) => e.code == getUsedLanguageCode() )
+  const defaultValue = availableLanguages.find((language) => language.code == context.languageCodes )
 
   const setValues = (_: SyntheticEvent, values: Language[]) => {
     const languageCodes: string[] = values.map((value: Language) => value.code)
@@ -37,14 +37,20 @@ export const LanguageSelection = () => {
       options={availableLanguages}
       getOptionLabel={(option) => option.name}
       defaultValue={[defaultValue]}
-      renderInput={(params) => <TextField {...params} label="languages" />}
+      renderInput={(params) => <TextField {...params} label="Language(s)" />}
       onChange={setValues}
     />
   );
 }
 
 
-const availableLanguages: Array<Record<string, string>> = [
+interface Language {
+  code: string,
+  name: string
+}
+
+
+const availableLanguages: Array<Language> = [
   { code: 'afr', name: 'Afrikaans' },
   { code: 'amh', name: 'Amharic' },
   { code: 'ara', name: 'Arabic' },
