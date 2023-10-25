@@ -15,4 +15,9 @@ export const mainConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
+  // tesseract.jsが動的に外部リソースを読み込んでいるのかwebpackのエラーが出るのでexternalsに設定する
+  externals: {
+    'tesseract.js': 'commonjs tesseract.js'
+  },
 };
+

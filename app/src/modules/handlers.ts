@@ -1,6 +1,7 @@
 // functions to be registered into ipcMain
 import { dialog, IpcMainInvokeEvent } from 'electron';
 import { parseFilePaths, getDirPath } from './filePath';
+import { imagesToPdf } from './ocr';
 
 export const handleParseFilePaths = async (_: IpcMainInvokeEvent, inputPath: string) => {
   const filePaths = await parseFilePaths(inputPath)
@@ -36,4 +37,9 @@ export const handleSaveDialog = async (_: IpcMainInvokeEvent, defaultPath: strin
 export const handleGetDirPath = async (_: IpcMainInvokeEvent, filePath: string) => {
   const dirPath = await getDirPath(filePath)
   return dirPath
+}
+
+export const handleImagesToPdf = async (_: IpcMainInvokeEvent, imagePaths: string[], outputPdfPath: string, langCodes: string) => {
+  const result = await imagesToPdf(imagePaths, outputPdfPath, langCodes)
+  return result
 }

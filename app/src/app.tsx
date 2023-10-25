@@ -2,10 +2,12 @@ import { createRoot } from 'react-dom/client';
 import { useState, createContext } from 'react';
 import { DropArea } from './components/DropArea'
 import { DisplayInput } from './components/DisplayInput'
-import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
-import { LanguageSelection } from './components/LanguageSelection';
-import Typography from '@mui/material/Typography';
+import { LanguageSelection, getUsedLanguageCode } from './components/LanguageSelection';
 import { OutputPathForm } from './components/OutputPathForm';
+import { ExecuteButton } from './components/ExecuteButton';
+import Typography from '@mui/material/Typography';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+
 
 interface contextValues {
   inputPaths: string[],
@@ -20,8 +22,8 @@ export const appContext = createContext({})
 
 
 const App = () => {
-  const [inputPaths, setInputPaths] = useState([''])
-  const [languageCodes, setLanguageCodes] = useState([''])
+  const [inputPaths, setInputPaths] = useState([])
+  const [languageCodes, setLanguageCodes] = useState([getUsedLanguageCode()])
   const [outputPath, setOutputPath] = useState('')
 
   const contextValues: contextValues = {
@@ -56,6 +58,9 @@ const App = () => {
           <OutputPathForm />
         </section>
 
+        <section style={{padding: '10px 0 10px 0', textAlign: 'center'}}>
+          <ExecuteButton />
+        </section>
       </div>
     </appContext.Provider>
   )

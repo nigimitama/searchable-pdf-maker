@@ -1,7 +1,7 @@
 
 import { useContext } from 'react';
 import { appContext } from '../app'
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 
 
 export const OutputPathForm = () => {
