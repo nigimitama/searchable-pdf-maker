@@ -27,17 +27,51 @@ const imageToPdf = async (inputPath: string, outputPath: string, langCodes: stri
     tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
     // user_defined_dpi: '300'
   });
-  const { data: { text, pdf } } = await worker.recognize(inputPath, { pdfTitle: outputPath }, { pdf: true });
-  console.log(`[imageToPdf] ${text}`)
-  fs.writeFileSync(outputPath, Buffer.from(pdf));
+  const result = await worker.recognize(inputPath, { pdfTitle: outputPath }, { pdf: true });
+  fs.writeFileSync(outputPath, Buffer.from(result.data.pdf));
   await worker.terminate();
   return true
 }
 
 // 複数の画像にOCRをかけてpdfにする
 export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, langCodes: string) => {
+  const start = Date.now();
   console.log(`[imagesToPdf] imagePaths=${imagePaths} outputPdfPath=${outputPdfPath} langCodes=${langCodes}`)
+  // let tempPdfPath
+  // const results: boolean[] = []
+  const tmpdir: string = os.tmpdir()
+  const tempPdfPaths: string[] = imagePaths.map((imagePath) => path.join(tmpdir, `${path.basename(imagePath)}.pdf`))
 
+  // 結果格納用
+  const messages: { [key: string]: boolean } = {
+    isSuccess: null,
+  }
+
+  // タスクをArrayに格納
+  const promises: Promise<boolean>[] = []
+  for (let i=0; i < imagePaths.length; i++) {
+    promises.push(imageToPdf(imagePaths[i], tempPdfPaths[i], langCodes))
+  }
+  // 並行的に処理
+  await Promise.all(promises)
+  .then(async (results) => {
+    const isSuccess = results.every((value) => value == true)
+    console.log(`[imagesToPdf] isSuccess=${isSuccess}`)
+    messages['isSuccess'] = isSuccess
+
+    await concatPdfs(tempPdfPaths, outputPdfPath)
+    console.log(`[imagesToPdf] ${outputPdfPath} created`)
+  })
+  const elapsed_ms = Date.now() - start;
+  console.log(`[imagesToPdf] seconds elapsed = ${Math.floor(elapsed_ms / 1000)}`)
+  return messages.isSuccess
+}
+
+/*
+// 複数の画像にOCRをかけてpdfにする(single-thread)
+export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, langCodes: string) => {
+  const start = Date.now();
+  console.log(`[imagesToPdf] imagePaths=${imagePaths} outputPdfPath=${outputPdfPath} langCodes=${langCodes}`)
   let tempPdfPath
   const results: boolean[] = []
   const tempPdfPaths: string[] = []
@@ -52,5 +86,9 @@ export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, l
   
   const isSuccess = results.every((value) => value == true)
   console.log(`[imagesToPdf] isSuccess=${isSuccess}`)
+
+  const elapsed_ms = Date.now() - start;
+  console.log(`[imagesToPdf] seconds elapsed = ${Math.floor(elapsed_ms / 1000)}`)
   return isSuccess
 }
+*/
