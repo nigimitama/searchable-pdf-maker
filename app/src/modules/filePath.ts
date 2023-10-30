@@ -22,7 +22,6 @@ const getChildren = (dirPath: string): Array<string> => {
 
 export const parseFilePaths = (inputPath: string): string[] => {
   const result = isDirectory(inputPath) ? getChildren(inputPath) : [inputPath]
-  console.log(`[parseFilePaths] result=${result}`)
   return result
 }
 

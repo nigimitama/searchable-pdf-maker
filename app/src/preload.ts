@@ -7,7 +7,8 @@ contextBridge.exposeInMainWorld('myAPI', {
   openDialog: (defaultPath: string) => ipcRenderer.invoke('openDialog', defaultPath),
   saveDialog: (defaultPath: string) => ipcRenderer.invoke('saveDialog', defaultPath),
   getDirPath: (filePath: string) => ipcRenderer.invoke('getDirPath', filePath),
-  imagesToPdf: async (inputPaths: string[], outputPdfPath: string, langCodes: string) => {
-    return ipcRenderer.invoke('imagesToPdf', inputPaths, outputPdfPath, langCodes)
+  imagesToPdfs: async (inputPaths: string[], langCodes: string) => {
+    return ipcRenderer.invoke('imagesToPdfs', inputPaths, langCodes)
   },
+  concatPdfs: (pdfPaths: string[], outputPath: string) => ipcRenderer.invoke('concatPdfs', pdfPaths, outputPath),
 })
