@@ -66,29 +66,3 @@ export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, l
   console.log(`[imagesToPdf] seconds elapsed = ${Math.floor(elapsed_ms / 1000)}`)
   return messages.isSuccess
 }
-
-/*
-// 複数の画像にOCRをかけてpdfにする(single-thread)
-export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, langCodes: string) => {
-  const start = Date.now();
-  console.log(`[imagesToPdf] imagePaths=${imagePaths} outputPdfPath=${outputPdfPath} langCodes=${langCodes}`)
-  let tempPdfPath
-  const results: boolean[] = []
-  const tempPdfPaths: string[] = []
-  const tmpdir: string = os.tmpdir()
-  for (const imagePath of imagePaths) {
-    tempPdfPath = path.join(tmpdir, `${path.basename(imagePath)}.pdf`)
-    results.push(await imageToPdf(imagePath, tempPdfPath, langCodes))
-    tempPdfPaths.push(tempPdfPath)
-  }
-  await concatPdfs(tempPdfPaths, outputPdfPath)
-  console.log(`[imagesToPdf] ${outputPdfPath} created`)
-  
-  const isSuccess = results.every((value) => value == true)
-  console.log(`[imagesToPdf] isSuccess=${isSuccess}`)
-
-  const elapsed_ms = Date.now() - start;
-  console.log(`[imagesToPdf] seconds elapsed = ${Math.floor(elapsed_ms / 1000)}`)
-  return isSuccess
-}
-*/
