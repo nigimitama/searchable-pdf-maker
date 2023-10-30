@@ -6,7 +6,7 @@ import path from 'node:path';
 
 // TODO: コントラストを強めるとかOCR向けの事前処理をはさみたいところ
 
-const concatPdfs = async (pdfPaths: string[], outputPath: string) => {
+export const concatPdfs = async (pdfPaths: string[], outputPath: string) => {
   const mainPdfDoc = await PDFDocument.create()
   for (const path of pdfPaths) {
     const pdfDoc = await PDFDocument.load(fs.readFileSync(path))
@@ -33,20 +33,26 @@ const imageToPdf = async (inputPath: string, outputPath: string, langCodes: stri
   return true
 }
 
-// 複数の画像にOCRをかけてpdfにする
-export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, langCodes: string) => {
-  const start = Date.now();
-  console.log(`[imagesToPdf] imagePaths=${imagePaths} outputPdfPath=${outputPdfPath} langCodes=${langCodes}`)
-  // let tempPdfPath
-  // const results: boolean[] = []
+
+interface ocrResults {
+  isSuccess: boolean,
+  pdfPaths: string[]
+}
+
+// 複数の画像をそれぞれpdfにする
+export const imagesToPdfs = async (imagePaths: string[], langCodes: string): Promise<ocrResults> => {
+  console.log(`[imagesToPdfs] imagePaths=${imagePaths} langCodes=${langCodes}`)
+  const start = Date.now()
+
+  // 出力先を設定
   const tmpdir: string = os.tmpdir()
   const tempPdfPaths: string[] = imagePaths.map((imagePath) => path.join(tmpdir, `${path.basename(imagePath)}.pdf`))
 
-  // 結果格納用
-  const messages: { [key: string]: boolean } = {
+  // 結果格納用のオブジェクト
+  const result: ocrResults = {
     isSuccess: null,
+    pdfPaths: []
   }
-
   // タスクをArrayに格納
   const promises: Promise<boolean>[] = []
   for (let i=0; i < imagePaths.length; i++) {
@@ -56,13 +62,10 @@ export const imagesToPdf = async (imagePaths: string[], outputPdfPath: string, l
   await Promise.all(promises)
   .then(async (results) => {
     const isSuccess = results.every((value) => value == true)
-    console.log(`[imagesToPdf] isSuccess=${isSuccess}`)
-    messages['isSuccess'] = isSuccess
-
-    await concatPdfs(tempPdfPaths, outputPdfPath)
-    console.log(`[imagesToPdf] ${outputPdfPath} created`)
+    result['isSuccess'] = isSuccess
+    result['pdfPaths'] = tempPdfPaths
   })
   const elapsed_ms = Date.now() - start;
   console.log(`[imagesToPdf] seconds elapsed = ${Math.floor(elapsed_ms / 1000)}`)
-  return messages.isSuccess
+  return result
 }
