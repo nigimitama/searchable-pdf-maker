@@ -1,5 +1,5 @@
 
-import { SetStateAction, useContext, useState } from 'react';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 import { appContext } from '../app'
 import { Button, CircularProgress } from '@mui/material';
 import { CircularProgressProps } from '@mui/material/CircularProgress';
@@ -117,8 +117,13 @@ export const ExecuteButton = () => {
     document.getElementById('resultMessage').innerText = resultMessage
   }
 
+  useEffect(() => {
+    const hasInput = context.inputPaths.length > 0
+    document.getElementById('executeButtonArea').hidden = !hasInput
+  })
+
   return (
-    <div>
+    <div id="executeButtonArea" hidden>
       <Button id='executeButton' variant='contained' size='small' disabled={isRunning} onClick={convertImagesToPdf}>Create PDF</Button>
       <div style={{margin: '10px'}}>
         <span id='spinner' hidden>

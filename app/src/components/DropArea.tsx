@@ -33,12 +33,12 @@ export const DropArea = () => {
       id='dropArea'
       style={{
         border: 'dashed', borderWidth: '1px', borderColor: 'gray',
-        backgroundColor: 'whitesmoke', padding: 15
+        backgroundColor: 'whitesmoke', padding: 30
       }}
       onDragOver={fillDragOver}
       onDrop={(event) => { readFile(event, context.setInputPaths, context.setOutputPath) }}
     >
-      <p style={{ background: 'white', padding: 5, margin: 0 }}>Drop Files Here (.jpg/.png/.gif)</p>
+      <p style={{ background: 'white', padding: 10, margin: 0 }}>Drop Files Here (.jpg/.png/.gif)</p>
     </div>
   )
 }
