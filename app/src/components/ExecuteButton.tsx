@@ -90,6 +90,7 @@ const imagesToPdf = async (inputPaths: string[], outputPath: string, langCodes: 
 
 export const ExecuteButton = () => {
   const [isRunning, setIsRunning] = useState(false)
+  const [isInputEmpty, setIsInputEmpty] = useState(true)
   const [progress, setProgress] = useState(0)
   
   const context = useContext(appContext)
@@ -118,13 +119,12 @@ export const ExecuteButton = () => {
   }
 
   useEffect(() => {
-    const hasInput = context.inputPaths.length > 0
-    document.getElementById('executeButtonArea').hidden = !hasInput
+    setIsInputEmpty(context.inputPaths.length === 0)
   })
 
   return (
-    <div id="executeButtonArea" hidden>
-      <Button id='executeButton' variant='contained' size='small' disabled={isRunning} onClick={convertImagesToPdf}>Create PDF</Button>
+    <div id="executeButtonArea">
+      <Button id='executeButton' variant='contained' size='small' disabled={isRunning || isInputEmpty} onClick={convertImagesToPdf}>Create PDF</Button>
       <div style={{margin: '10px'}}>
         <span id='spinner' hidden>
           <CircularProgressWithLabel value={progress} />

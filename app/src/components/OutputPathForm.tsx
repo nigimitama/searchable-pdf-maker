@@ -1,7 +1,7 @@
 
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { appContext } from '../app'
-import { Button, Typography } from '@mui/material';
+import { Button, Stack, TextField } from '@mui/material';
 
 
 export const OutputPathForm = () => {
@@ -12,16 +12,17 @@ export const OutputPathForm = () => {
     if (filePath) context.setOutputPath(filePath)
   }
 
-  useEffect(() => {
-    const hasInput = context.inputPaths.length > 0
-    document.getElementById('OutputPathForm').hidden = !hasInput
-  })
-
   return (
-    <div id="OutputPathForm" hidden>
-      <Typography variant='h6'>Output Path</Typography>
-      <span style={{margin: '0 10px 0 0'}}>{context.outputPath}</span>
-      <Button variant='contained' size='small' onClick={fetchFilePath}>Browser</Button>
+    <div id="OutputPathForm">
+      <Stack spacing={1} direction="row" style={{width: "100%"}}>
+        <TextField
+          id="outputPathField"
+          label="Output Location"
+          value={context.outputPath}
+          size="small"
+        />
+        <Button variant='contained' size='small' onClick={fetchFilePath}>Browser</Button>
+      </Stack>
     </div>
   )
 }

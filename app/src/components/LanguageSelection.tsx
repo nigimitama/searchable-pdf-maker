@@ -39,6 +39,7 @@ export const LanguageSelection = () => {
       defaultValue={[defaultValue]}
       renderInput={(params) => <TextField {...params} label="Language(s)" />}
       onChange={setValues}
+      size="small"
     />
   );
 }

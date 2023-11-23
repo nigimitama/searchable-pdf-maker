@@ -33,7 +33,7 @@ export const DropArea = () => {
       id='dropArea'
       style={{
         border: 'dashed', borderWidth: '1px', borderColor: 'gray',
-        backgroundColor: 'whitesmoke', padding: 30
+        backgroundColor: 'whitesmoke', padding: 100,
       }}
       onDragOver={fillDragOver}
       onDrop={(event) => { readFile(event, context.setInputPaths, context.setOutputPath) }}
