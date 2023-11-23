@@ -6,7 +6,7 @@ import { Heading } from './Heading'
 export const InputArea: React.FC = () => {
   return (
     <>
-      <Heading>Select Files</Heading>
+      <Heading>Input Files</Heading>
       <DropArea />
       <DisplayInput />
     </>
