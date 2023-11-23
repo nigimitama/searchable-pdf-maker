@@ -50,19 +50,16 @@ const eachSlice = (array: Array<any>, size = 10): Array<Array<any>> => {
   return result
 }
 
-// arrayをk個に分割する
-const splitArray = (array: Array<any>, k = 10): Array<Array<any>> => {
-    const n = array.length
-    const step = Math.max(Math.floor(n / k), 1)
-    return eachSlice(array, step)
-}
 
-
-const imagesToPdf = async (inputPaths: string[], outputPath: string, langCodes: string,
-                     setProgress: React.Dispatch<SetStateAction<number>>) => {
+const imagesToPdf = async (
+  inputPaths: string[],
+  outputPath: string,
+  langCodes: string,
+  setProgress: React.Dispatch<SetStateAction<number>>,
+  concurrency = 10
+) => {
   const start = Date.now()
-  const nParts = inputPaths.length > 20 ? 10 : 3
-  const pathsArray = splitArray(inputPaths, nParts) // progressの表示のために分割
+  const pathsArray = eachSlice(inputPaths, concurrency) // progressの表示のために分割
   const tempPdfPaths: string[] = []
   let isSuccess
   let result
