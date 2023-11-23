@@ -4,7 +4,6 @@ import { getUsedLanguageCode } from './components/LanguageSelection';
 import { ExecuteButton } from './components/ExecuteButton';
 import { SettingArea } from './components/SettingArea';
 
-import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { InputArea } from './components/InputArea';
 
@@ -37,18 +36,18 @@ const App = () => {
     <appContext.Provider value={contextValues}>
       <div>
         <Stack direction="row" spacing={2} style={{width: 950, height: 350}}>
-          <Paper style={{width: 550, padding: 20}}>
+          <div style={{width: 550, padding: 20}}>
             <InputArea />
-          </Paper>
+          </div>
 
           <Stack spacing={2} style={{width: 400}}>
-            <Paper style={{padding: 20}}>
+            <div style={{padding: 20}}>
               <SettingArea />
-            </Paper>
+            </div>
 
-            <Paper style={{padding: 40, textAlign: 'center', height: "100%"}}>
+            <div style={{padding: 40, textAlign: 'center', height: "100%"}}>
               <ExecuteButton />
-            </Paper>
+            </div>
           </Stack>
         </Stack>
       </div>
