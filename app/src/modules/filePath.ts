@@ -11,8 +11,12 @@ const isDirectory = (inputPath: string): boolean => {
 const getChildren = (dirPath: string): Array<string> => {
   let filePath = ''
   const filePaths = []
-  const files = fs.readdirSync(dirPath, { recursive: true })
+  const files: string[] | Buffer[] = fs.readdirSync(dirPath, { recursive: true })
   for (const file of files) {
+    if (typeof(file) != "string") {
+      continue
+    }
+
     filePath = path.join(dirPath, file)
     if (!isDirectory(filePath)) filePaths.push(filePath)
   }

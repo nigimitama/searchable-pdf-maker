@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import React from "react";
 
 type HeadingProps = {
-  children: React.ReactDOM | string
+  children: React.ReactNode | string
 }
 
 
