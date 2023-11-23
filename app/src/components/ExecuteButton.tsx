@@ -1,6 +1,6 @@
 
 import { SetStateAction, useContext, useEffect, useState } from 'react';
-import { appContext } from '../app'
+import { appContext, contextValues } from '../app'
 import { Button, CircularProgress } from '@mui/material';
 import { CircularProgressProps } from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
@@ -93,7 +93,7 @@ export const ExecuteButton = () => {
   const [isInputEmpty, setIsInputEmpty] = useState(true)
   const [progress, setProgress] = useState(0)
   
-  const context = useContext(appContext)
+  const context: contextValues = useContext(appContext)
 
   const convertImagesToPdf = async () => {
     // validate

@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { useState, createContext } from 'react';
+import { useState, createContext, Dispatch, SetStateAction, FC } from 'react';
 import { getUsedLanguageCode } from './components/LanguageSelection';
 import { ExecuteButton } from './components/ExecuteButton';
 import { SettingArea } from './components/SettingArea';
@@ -7,18 +7,18 @@ import { SettingArea } from './components/SettingArea';
 import Stack from '@mui/material/Stack';
 import { InputArea } from './components/InputArea';
 
-interface contextValues {
+export type contextValues = {
   inputPaths: string[],
-  setInputPaths: React.Dispatch<React.SetStateAction<string[]>>,
+  setInputPaths: Dispatch<SetStateAction<string[]>>,
   languageCodes: string[],
-  setLanguageCodes: React.Dispatch<React.SetStateAction<string[]>>,
+  setLanguageCodes: Dispatch<SetStateAction<string[]>>,
   outputPath: string,
-  setOutputPath: React.Dispatch<React.SetStateAction<string>>,
+  setOutputPath: Dispatch<SetStateAction<string>>,
 }
 
-export const appContext = createContext({})
+export const appContext = createContext(null)
 
-const App = () => {
+const App: FC = () => {
   const [inputPaths, setInputPaths] = useState([])
   const [languageCodes, setLanguageCodes] = useState([getUsedLanguageCode()])
   const [outputPath, setOutputPath] = useState(' ')

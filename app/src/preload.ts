@@ -2,6 +2,12 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 import { contextBridge, ipcRenderer } from 'electron'
 
+declare global {
+  interface Window {
+    myAPI: any
+  }
+}
+
 contextBridge.exposeInMainWorld('myAPI', {
   parseFilePaths: (inputPath: string) => ipcRenderer.invoke('parseFilePaths', inputPath),
   openDialog: (defaultPath: string) => ipcRenderer.invoke('openDialog', defaultPath),

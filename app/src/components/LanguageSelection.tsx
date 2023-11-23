@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 import { SyntheticEvent, useContext } from 'react';
-import { appContext } from '../app'
+import { appContext, contextValues } from '../app'
 
 
 // ブラウザの言語を取得する
@@ -22,7 +22,7 @@ export const getUsedLanguageCode = (): string => {
 
 
 export const LanguageSelection = () => {
-  const context = useContext(appContext)
+  const context: contextValues = useContext(appContext)
   const defaultValue = availableLanguages.find((language) => language.code == context.languageCodes )
 
   const setValues = (_: SyntheticEvent, values: Language[]) => {

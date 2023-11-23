@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { appContext } from '../app'
+import { appContext, contextValues } from '../app'
 
 // dropはdragoverイベントを登録していてはじめて発火するため指定
 const fillDragOver = (event: DragEvent) => {
@@ -27,7 +27,7 @@ const readFile = async (event: DragEvent, setInputPaths: Function, setOutputPath
 
 
 export const DropArea = () => {
-  const context = useContext(appContext)
+  const context: contextValues = useContext(appContext)
   return (
     <div
       id='dropArea'

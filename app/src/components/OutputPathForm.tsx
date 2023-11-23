@@ -1,11 +1,11 @@
 
 import { useContext } from 'react';
-import { appContext } from '../app'
+import { appContext, contextValues } from '../app'
 import { Button, Stack, TextField } from '@mui/material';
 
 
 export const OutputPathForm = () => {
-  const context = useContext(appContext)
+  const context: contextValues = useContext(appContext)
 
   const fetchFilePath = async () => {
     const filePath = await window.myAPI.saveDialog(context.outputPath)
