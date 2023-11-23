@@ -1,13 +1,12 @@
 import { createRoot } from 'react-dom/client';
 import { useState, createContext } from 'react';
-import { DropArea } from './components/DropArea'
-import { DisplayInput } from './components/DisplayInput'
 import { getUsedLanguageCode } from './components/LanguageSelection';
-import { OutputPathForm } from './components/OutputPathForm';
 import { ExecuteButton } from './components/ExecuteButton';
-import Typography from '@mui/material/Typography';
 import { SettingArea } from './components/SettingArea';
 
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { InputArea } from './components/InputArea';
 
 interface contextValues {
   inputPaths: string[],
@@ -20,11 +19,10 @@ interface contextValues {
 
 export const appContext = createContext({})
 
-
 const App = () => {
   const [inputPaths, setInputPaths] = useState([])
   const [languageCodes, setLanguageCodes] = useState([getUsedLanguageCode()])
-  const [outputPath, setOutputPath] = useState('')
+  const [outputPath, setOutputPath] = useState(' ')
 
   const contextValues: contextValues = {
     'inputPaths': inputPaths,
@@ -38,24 +36,21 @@ const App = () => {
   return (
     <appContext.Provider value={contextValues}>
       <div>
+        <Stack direction="row" spacing={2} style={{width: 950, height: 350}}>
+          <Paper style={{width: 550, padding: 20}}>
+            <InputArea />
+          </Paper>
 
-        <section>
-          <Typography variant="h6">Input</Typography>
-          <DropArea />
-          <DisplayInput />
-        </section>
+          <Stack spacing={2} style={{width: 400}}>
+            <Paper style={{padding: 20}}>
+              <SettingArea />
+            </Paper>
 
-        <section style={{ margin: '1em 0 1em 0' }}>
-          <SettingArea />
-        </section>
-
-        <section>
-          <OutputPathForm />
-        </section>
-
-        <section style={{padding: '10px 0 10px 0', textAlign: 'center'}}>
-          <ExecuteButton />
-        </section>
+            <Paper style={{padding: 40, textAlign: 'center', height: "100%"}}>
+              <ExecuteButton />
+            </Paper>
+          </Stack>
+        </Stack>
       </div>
     </appContext.Provider>
   )
