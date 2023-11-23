@@ -1,13 +1,15 @@
-import { useContext } from 'react';
+import { useContext, DragEvent, Dispatch, SetStateAction } from 'react';
 import { appContext, contextValues } from '../app'
 
 // dropはdragoverイベントを登録していてはじめて発火するため指定
-const fillDragOver = (event: DragEvent) => {
+const fillDragOver = (event: DragEvent<HTMLDivElement>) => {
   event.preventDefault();
 }
 
 // ドロップされたらそのファイルのパスを読み込む
-const readFile = async (event: DragEvent, setInputPaths: Function, setOutputPath: Function) => {
+const readFile = async (event: DragEvent<HTMLDivElement>,
+                        setInputPaths: Dispatch<SetStateAction<string[]>>,
+                        setOutputPath: Dispatch<SetStateAction<string>>) => {
   event.preventDefault()
   let paths: Array<string> = []
   for (const file of event.dataTransfer.files) {
