@@ -6,8 +6,6 @@ import { Heading } from './Heading';
 
 
 export const SettingArea = () => {
-
-
   return (
     <div id="SettingArea">
       <Heading>Settings</Heading>

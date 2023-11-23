@@ -1,11 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { useState, createContext, Dispatch, SetStateAction, FC } from 'react';
-import { getUsedLanguageCode } from './components/LanguageSelection';
 import { ExecuteButton } from './components/ExecuteButton';
 import { SettingArea } from './components/SettingArea';
 
 import Stack from '@mui/material/Stack';
 import { InputArea } from './components/InputArea';
+import { estimateUsedLanguageCodes } from './components/LanguageSelection';
 
 export type contextValues = {
   inputPaths: string[],
@@ -20,7 +20,7 @@ export const appContext = createContext(null)
 
 const App: FC = () => {
   const [inputPaths, setInputPaths] = useState([])
-  const [languageCodes, setLanguageCodes] = useState([getUsedLanguageCode()])
+  const [languageCodes, setLanguageCodes] = useState(estimateUsedLanguageCodes())
   const [outputPath, setOutputPath] = useState(' ')
 
   const contextValues: contextValues = {

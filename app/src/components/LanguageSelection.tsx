@@ -5,11 +5,11 @@ import { SyntheticEvent, useContext } from 'react';
 import { appContext, contextValues } from '../app'
 
 
-// ブラウザの言語を取得する
-export const getUsedLanguageCode = (): string => {
-  // MEMO: Intl.NumberFormat().resolvedOptions().locale もアリ
+// ユーザーが使用している言語のコードを取得する
+export const estimateUsedLanguageCodes = (): string[] => {
   // ja-JP のような形で入ることも考えてsplitしておく
   const locale = window.navigator.language.split("-")[0]
+
   // ひとまずいくつかのメジャー言語だけ対応しておく
   const localeToLangCodes: Record<string, string> = {
     en: "eng",
@@ -17,13 +17,19 @@ export const getUsedLanguageCode = (): string => {
     ja: "jpn",
     zh: "chi_tra",
   }
-  return localeToLangCodes[locale]
+
+  const esimatedLanguageCode: string | undefined = localeToLangCodes[locale]
+  if (esimatedLanguageCode === undefined) {
+    return []
+  } else {
+    return [esimatedLanguageCode]
+  }
 }
 
 
 export const LanguageSelection = () => {
   const context: contextValues = useContext(appContext)
-  const defaultValue = availableLanguages.find((language) => language.code == context.languageCodes )
+  const defaultValue: Language = availableLanguages.find((language: Language) => language.code === context.languageCodes[0])
 
   const setValues = (_: SyntheticEvent, values: Language[]) => {
     const languageCodes: string[] = values.map((value: Language) => value.code)
@@ -35,7 +41,7 @@ export const LanguageSelection = () => {
       multiple
       id="languageSelection"
       options={availableLanguages}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option: Language) => option.name}
       defaultValue={[defaultValue]}
       renderInput={(params) => <TextField {...params} label="Language(s)" />}
       onChange={setValues}
