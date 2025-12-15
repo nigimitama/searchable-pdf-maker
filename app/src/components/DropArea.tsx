@@ -13,7 +13,8 @@ const readFile = async (event: DragEvent<HTMLDivElement>,
   event.preventDefault()
   let paths: Array<string> = []
   for (const file of event.dataTransfer.files) {
-    const filePaths = await window.myAPI.parseFilePaths(file.path)
+    const filePath = window.myAPI.getPathForFile(file)
+    const filePaths = await window.myAPI.parseFilePaths(filePath)
     paths = paths.concat(filePaths)
   }
   setInputPaths(paths)
