@@ -1,5 +1,5 @@
 # searchable-pdf-maker
 
-画像にOCRをかけて検索可能なPDFを作成するデスクトップアプリ
+A desktop application that performs OCR on images to create searchable PDFs
 
 ![](images/app.png)
