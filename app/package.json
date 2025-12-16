@@ -50,6 +50,6 @@
     "pdf-lib": "^1.17.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tesseract.js": "^5.0.2"
+    "tesseract.js": "^7.0.0"
   }
 }
